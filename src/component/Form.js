@@ -17,9 +17,6 @@ function Form() {
 
   const [arr, setArr] = useState([]);
 
-  const btnRef = useRef([]);
-
-  console.log(btnRef, "btn ref");
 
   const handleHistory = async (e) => {
     e.preventDefault();
@@ -60,21 +57,16 @@ function Form() {
         setError("Inputa Duzgun Link Daxil Edin!!!");
       }
     }
-
-    // console.log(link, "link");
   };
 
-  console.log(btnRef.current, "array");
 
-  const handleCopyBtn = (term, idx) => {
-    btnRef.current[idx].innerHTML = "Copied";
-    // handleCopy(term);
-
+  const handleCopyBtn = (term, e) => {
+    e.target.innerText = "Copied"
     const timer = setTimeout(() => {
-      btnRef.current[idx].innerHTML = "Copy";
+      e.target.innerText = "Copy"
+      copyClipboard(term);
     }, 1000);
 
-    copyClipboard(term);
   };
 
   return (
@@ -145,8 +137,7 @@ function Form() {
             <br />
             <a href={links.short_link}>{links.short_link}</a>
             <button
-              ref={(el) => (btnRef.current[idx] = el)}
-              onClick={() => handleCopyBtn(links.short_link, idx)}
+              onClick={(e) => handleCopyBtn(links.short_link, e)}
               className={buttonClass}
             >
               {copy}
